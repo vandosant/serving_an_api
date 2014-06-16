@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "Make API" do
 
   describe 'GET /makes' do
-    it 'returns a list of makes' do
+    it 'returns a list of makes as JSON' do
       ford = create_make(name: "Ford")
       chevy = create_make(name: "Chevy")
 
@@ -35,6 +35,40 @@ describe "Make API" do
 
       expect(response.code.to_i).to eq 200
       expect(JSON.parse(response.body)).to eq(expected_response)
+    end
+
+    it 'returns a list of makes as XML' do
+      ford = create_make(name: "Ford")
+      chevy = create_make(name: "Chevy")
+
+      get '/makes', {}, {'Accept' => 'application/xml'}
+
+      expected_xml = <<-XML
+<apiResponse>
+  <links>
+    <self href="#{makes_path}"/>
+  </links>
+  <makes>
+    <make>
+      <links>
+        <self href="#{makes_path(ford)}"/>
+      </links>
+      <id>#{ford.id}</id>
+      <name>Ford</name>
+    </make>
+    <make>
+      <links>
+        <self href="#{makes_path(chevy)}"/>
+      </links>
+      <id>#{chevy.id}</id>
+      <name>Chevy</name>
+    </make>
+  </makes>
+</apiResponse>
+      XML
+
+      expect(response.code.to_i).to eq 200
+      expect(response.body).to eq(expected_xml)
     end
   end
 
