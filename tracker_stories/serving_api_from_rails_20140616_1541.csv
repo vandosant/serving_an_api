@@ -113,7 +113,7 @@ The structure of the XML will be slightly different than the JSON. As an example
 
 <apiResponse>
  	<links>
- 		<self href=""/makes/1"">
+ 		<self href=""/makes/1""/>
  	</links>
  	<make>
  		<id>2</id>
@@ -125,12 +125,12 @@ The /makes response will look like this:
 
 <apiResponse>
  	<links>
- 		<self href=""/makes"">
+ 		<self href=""/makes""/>
  	</links>
  	<makes>
 	 	<make>
 	 		<links>
-		 		<self href=""/makes/1"">
+		 		<self href=""/makes/1""/>
 		 	</links>
 		 	<id>2</id>
 		 	<name>Ford</name>
