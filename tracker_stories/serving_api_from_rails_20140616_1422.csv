@@ -1,0 +1,142 @@
+Id,Story,Labels,Iteration,Iteration Start,Iteration End,Story Type,Estimate,Current State,Created at,Accepted at,Deadline,Requested By,Description,URL,Owned By
+73085634,GET /cars,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 11, 2014",,,Mike Gehard,"This endpoint will take GET requests to /cars.
+
+A user does not have to send an Authorization header with a user API token.
+
+This endpoint will return a 200, regardless if there are any cars or not.
+
+Example JSON returned from this endpoint will be:
+
+{
+    ""_links"": {
+        ""self"": {
+            ""href"": ""/cars""
+        }
+    },
+    ""_embedded"": {
+        ""cars"": [
+            {
+                ""_links"": {
+                    ""self"": {
+                        ""href"": ""/cars/266""
+                    },
+                    ""make"": {
+                        ""href"": ""/makes/600""
+                    }
+                },
+                ""id"": 266,
+                ""color"": ""red"",
+                ""doors"": 4,
+                ""purchased_on"": ""1973-10-04""
+            },
+            {
+                ""_links"": {
+                    ""self"": {
+                        ""href"": ""/cars/267""
+                    },
+                    ""make"": {
+                        ""href"": ""/makes/601""
+                    }
+                },
+                ""id"": 267,
+                ""color"": ""blue"",
+                ""doors"": 2,
+                ""purchased_on"": ""2012-01-24""
+            }
+        ]
+    }
+}",https://www.pivotaltracker.com/story/show/73085634,
+73086368,GET /cars/:id,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 11, 2014",,,Mike Gehard,"This endpoint will take GET requests to /cars/:id.
+
+A user does not have to send an Authorization header with a user API token.
+
+This endpoint will return a 200 if the car can be found.
+
+Example JSON returned when a car is found will be:
+
+{
+    ""_links"": {
+        ""self"": {
+            ""href"": ""/cars/268""
+        },
+        ""make"": {
+            ""href"": ""/makes/602""
+        }
+    },
+    ""id"": 268,
+    ""color"": ""red"",
+    ""doors"": 4,
+    ""purchased_on"": ""1973-10-04""
+}
+
+When a car can not be found, the endpoint will return a 404. The JSON will be:
+{}",https://www.pivotaltracker.com/story/show/73086368,
+73087844,POST /cars,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 11, 2014",,,Mike Gehard,"This endpoint will take POST requests to /cars.
+
+This endpoint will create a new Car record in the database.
+
+A user does not have to send an Authorization header with a user API token for this story. That functionality will be added in a later story.
+
+This endpoint will return a 201. Currently you do not need to handle the case when a Car creation fails.
+
+The endpoint will return the JSON representation for the car created. Example:
+
+{
+    ""_links"": {
+        ""self"": {
+            ""href"": ""/cars/268""
+        },
+        ""make"": {
+            ""href"": ""/makes/602""
+        }
+    },
+    ""id"": 268,
+    ""color"": ""red"",
+    ""doors"": 4,
+    ""purchased_on"": ""1973-10-04""
+}",https://www.pivotaltracker.com/story/show/73087844,
+73088030,POST /cars returns error without an Authorization token,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 11, 2014",,,Mike Gehard,"If the request does not include a User's API token, then the endpoint returns a 401.
+
+It also does not create a Car.
+
+The JSON it returns is an empty hash:
+{}",https://www.pivotaltracker.com/story/show/73088030,
+73089130,POST /cars returns error with Authentication token is not valid for a user,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 11, 2014",,,Mike Gehard,"Given I have a user with an API token.
+When I submit an API request with a token that does not match any user in the system.
+Then the user returns a 401 status, JSON for an empty hash and does not create a Car.",https://www.pivotaltracker.com/story/show/73089130,
+73210616,MVP - minimum viable project,"",1,"Jun 16, 2014","Jun 22, 2014",release,,unstarted,"Jun 13, 2014",,,Mike Gehard,,https://www.pivotaltracker.com/story/show/73210616,
+73210784,/makes API can return XML as well as json,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 13, 2014",,,Mike Gehard,"A client would like to use our API but they can only consume XML.
+
+You need to handle both XML and JSON from all of the /makes API endpoints.
+
+The structure of the XML will be slightly different than the JSON. As an example, the /makes/:id XML will look like this:
+
+<apiResponse>
+ 	<links>
+ 		<self href=""/makes/1"">
+ 	</links>
+ 	<make>
+ 		<id>2</id>
+ 		<name>Ford</name>
+ 	</make>
+</apiResponse>
+
+The /makes response will look like this:
+
+<apiResponse>
+ 	<links>
+ 		<self href=""/makes"">
+ 	</links>
+ 	<makes>
+	 	<make>
+	 		<links>
+		 		<self href=""/makes/1"">
+		 	</links>
+		 	<id>2</id>
+		 	<name>Ford</name>
+	 	</make>
+ 	</makes>
+</apiResponse>",https://www.pivotaltracker.com/story/show/73210784,
+73210740,/cars no longer sets/gets number of doors,"",1,"Jun 16, 2014","Jun 22, 2014",feature,1,unstarted,"Jun 13, 2014",,,Mike Gehard,"There are still clients who are using the number of doors field so you should create a new version of the API so that those how are depending on the number of doors field don't break.
+
+The new version of the api should not require users to specify a version number. If users still want to use the old API, they should be forced to specify a new version.",https://www.pivotaltracker.com/story/show/73210740,
