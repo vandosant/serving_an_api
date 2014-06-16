@@ -29,10 +29,39 @@ describe 'Cars API' do
               "id" => el_camino.id, "color" => el_camino.color, "doors" => el_camino.doors, "purchased_on" => "1992-01-24"}
           ]
         }}
-      
+
       expect(response.code.to_i).to eq 200
       expect(JSON.parse(response.body)).to eq expected
     end
   end
 
+  describe 'GET /cars/:id' do
+    it 'returns information about a specific car' do
+      buick = create_make(name: "Buick")
+      grand_national = create_car(color: "red", doors: 2, purchased_on: "1987-10-04", make_id: buick.id)
+
+      get "/cars/#{grand_national.id}", {}, {'Accept' => 'application/json'}
+
+      expected = {
+        "_links" => {
+          "self" => {"href" => "/cars/#{grand_national.id}"},
+          "make" => {"href" => "/makes/#{buick.id}"}
+        },
+        "id" => grand_national.id,
+        "color" => "red",
+        "doors" => 2,
+        "purchased_on" => "1987-10-04"
+      }
+
+      expect(response.code.to_i).to eq 200
+      expect(JSON.parse(response.body)).to eq expected
+    end
+
+    it 'returns an error for an invalid car' do
+      get "/cars/#{rand(100000)}", {}, {'Accept' => 'application/json'}
+
+      expect(response.code.to_i).to eq 404
+      expect(JSON.parse(response.body)).to eq ({})
+    end
+  end
 end
